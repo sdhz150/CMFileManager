@@ -47,7 +47,7 @@
 
     <TextView
       android:id="@+id/navigation_view_item_name"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignParentLeft="true"
       android:layout_alignParentTop="true"
@@ -55,6 +55,17 @@
       android:layout_marginTop="@dimen/default_margin"
       android:singleLine="true"
       android:textAppearance="@style/primary_text_appearance" />
+
+    <TextView
+      android:id="@+id/navigation_view_item_cnname"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="7dp"
+      android:layout_toRightOf="@+id/navigation_view_item_name"
+      android:ellipsize="middle"
+      android:singleLine="true"
+      android:textAppearance="@style/secondary_text_appearance" />
 
     <TextView
       android:id="@+id/navigation_view_item_summary"

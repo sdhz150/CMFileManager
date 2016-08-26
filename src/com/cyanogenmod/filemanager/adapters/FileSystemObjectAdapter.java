@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.os.Environment;
 
 import com.cyanogenmod.filemanager.R;
 import com.cyanogenmod.filemanager.model.FileSystemObject;
@@ -34,6 +35,7 @@ import com.cyanogenmod.filemanager.model.ParentDirectory;
 import com.cyanogenmod.filemanager.ui.IconHolder;
 import com.cyanogenmod.filemanager.ui.ThemeManager;
 import com.cyanogenmod.filemanager.ui.ThemeManager.Theme;
+import com.cyanogenmod.filemanager.util.AppDirNameHelper;
 import com.cyanogenmod.filemanager.util.FileHelper;
 import com.cyanogenmod.filemanager.util.MimeTypeHelper;
 
@@ -73,6 +75,7 @@ public class FileSystemObjectAdapter
         ImageButton mBtCheck;
         ImageView mIvIcon;
         TextView mTvName;
+        TextView mTvCnName;
         TextView mTvSummary;
         TextView mTvSize;
     }
@@ -114,6 +117,10 @@ public class FileSystemObjectAdapter
     private static final int RESOURCE_ITEM_SUMMARY = R.id.navigation_view_item_summary;
     //The resource of the item size information
     private static final int RESOURCE_ITEM_SIZE = R.id.navigation_view_item_size;
+
+    private static final int RESOURCE_ITEM_CNNAME = R.id.navigation_view_item_cnname;
+
+    private String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
     /**
      * Constructor of <code>FileSystemObjectAdapter</code>.
@@ -255,6 +262,7 @@ public class FileSystemObjectAdapter
             ViewHolder viewHolder = new FileSystemObjectAdapter.ViewHolder();
             viewHolder.mIvIcon = (ImageView)v.findViewById(RESOURCE_ITEM_ICON);
             viewHolder.mTvName = (TextView)v.findViewById(RESOURCE_ITEM_NAME);
+            viewHolder.mTvCnName = (TextView)v.findViewById(RESOURCE_ITEM_CNNAME);
             viewHolder.mTvSummary = (TextView)v.findViewById(RESOURCE_ITEM_SUMMARY);
             viewHolder.mTvSize = (TextView)v.findViewById(RESOURCE_ITEM_SIZE);
             if (!this.mPickable) {
@@ -282,6 +290,13 @@ public class FileSystemObjectAdapter
         if (viewHolder.mTvSummary != null) {
             theme.setTextColor(
                     getContext(), viewHolder.mTvSummary, "text_color"); //$NON-NLS-1$
+        }
+        FileSystemObject fso = getItem(position);
+        String mCnName = AppDirNameHelper.dirCnNameMap.get(fso.getFullPath().replace(sdPath,"")) == null ?
+                                "" : AppDirNameHelper.dirCnNameMap.get(fso.getFullPath().replace(sdPath,""));
+        if (viewHolder.mTvCnName != null) {
+            viewHolder.mTvCnName.setText(mCnName);
+            theme.setTextColor(getContext(), viewHolder.mTvCnName, "text_color"); //$NON-NLS-1$
         }
         if (viewHolder.mTvSize != null) {
             theme.setTextColor(
